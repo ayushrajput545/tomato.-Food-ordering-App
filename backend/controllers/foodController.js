@@ -8,6 +8,13 @@ exports.addFood = async(req,res)=>{
         let image_filename =   `${req.file.filename}`;  //image -> same name as we write in multer "image" key = image value : file any
         const{name , description , price , category}= req.body;
 
+        if(!name || !description || !image_filename || !price){
+            return res.status(402).json({
+                success:false,
+                message:"All fields are required"
+            })
+        }
+
         const foodDetails = await food.create({name , description , price , category ,image:image_filename});
 
         return res.status(200).json({
