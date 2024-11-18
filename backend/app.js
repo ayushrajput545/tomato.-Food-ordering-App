@@ -5,6 +5,7 @@ const cors = require('cors');
 const dbConnect = require('./config/database');
 const foodRoute = require('./routes/foodRoute');
 const userRoute = require('./routes/userRoute')
+const cartRoute = require('./routes/cartRoute');
 
 const PORT = process.env.PORT || 4000
 
@@ -18,6 +19,7 @@ app.use(cors())         //connect frontend to bknd
 app.use('/api/v1',foodRoute);
 app.use('/images' , express.static('uploads'));
 app.use('/api/v1',userRoute);
+app.use('/api/v1', cartRoute);
 
 app.use('/',(req,res)=>{
     res.send("API WORKING")

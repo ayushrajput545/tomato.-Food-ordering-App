@@ -44,10 +44,20 @@ exports.signup= async(req,res)=>{
 
         const newUser = await User.create({name:name , email:email , password:hashedPassword});
 
+        const payload ={
+            email:newUser.email,
+            id:newUser._id
+        }
+
+        const token = jwt.sign(payload,process.env.JWT_SECRET , {expiresIn:"2d"});
+        const userObj = newUser.toObject(); // Convert Mongoose document to plain object
+        userObj.token = token;
+
         return res.status(200).json({
             success:true,
             message:'User Successfully Created',
-            newUser
+            newUser:userObj,
+            token
         });
 
     }
