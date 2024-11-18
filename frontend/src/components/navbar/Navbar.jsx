@@ -8,7 +8,15 @@ const Navbar = ({setShowLogin}) => {
 
   //State variable for set underline in ul 
   const[menu, setMenu] = useState("home");
-  const {getTotalCartAmount} = useContext(StoreContext);
+  const {getTotalCartAmount ,token , setToken} = useContext(StoreContext);
+  const navigate = useNavigate();
+
+  function logOutHandler(){
+    localStorage.removeItem("token");
+    setToken("");
+    navigate('/');
+
+  }
   
 
   return (
@@ -34,8 +42,30 @@ const Navbar = ({setShowLogin}) => {
            <div className={getTotalCartAmount()===0?"":"dot"}></div>{/* Creating dynimic classname */}
 
         </div>
+        {!token ? <button onClick={()=>setShowLogin(true)}>Sign in</button>
+            :
+            <div className='navbar-profile'>
 
-        <button onClick={()=>setShowLogin(true)}>Sign in</button>
+              <img src={assets.profile_icon} alt="" />
+
+              <ul className='nav-profile-dropdown'>
+
+                <li>
+                  <img src={assets.bag_icon} alt="" />
+                  <p>Orders</p>
+                </li>
+
+                <hr />
+
+                <li onClick={logOutHandler}>
+                  <img src={assets.logout_icon} alt="" />
+                  <p>LogOut</p>
+                </li>
+              </ul>
+
+            </div>   
+        }
+        
 
       </div>
 

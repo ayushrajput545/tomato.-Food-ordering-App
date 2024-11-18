@@ -6,12 +6,12 @@ import { StoreContext } from '../../context/StoreContext';
 
 const Fooditems = ({id ,name , price , description , image}) => {
  
-  const{cartItems,addToCart,removeFromCart}= useContext(StoreContext);
+  const{cartItems,addToCart,removeFromCart ,url}= useContext(StoreContext);
   return (
     <div className='food-item'>
 
         <div className="food-item-img-container">
-            <img src={image} alt="" className="food-item-image" />
+            <img src={`http://localhost:3000/images/${image}`} alt="" className="food-item-image" />
             {!cartItems[id] //item count is zero then show on image otherwise show counter
               ?
               <img className='add' onClick={()=>addToCart(id)} src={assets.add_icon_white}/> 
