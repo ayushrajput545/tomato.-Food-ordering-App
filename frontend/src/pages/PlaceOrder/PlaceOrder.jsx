@@ -54,7 +54,7 @@ const PlaceOrder = () => {
      window.location.replace(session_url);
     }
 
-    catch(err){
+    catch(err){ 
       console.log(err);
     }
     
