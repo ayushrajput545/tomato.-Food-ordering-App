@@ -43,13 +43,13 @@ exports.placeOrder= async(req,res)=>{
         const session = await stripe.checkout.sessions.create({
             line_items:line_items,
             mode:'payment',
-            success_url:`${frontend_url}/verify?success=true&orderId${newOrder._id}`,
-            cancel_url:`${frontend_url}/verify?success=false&orderId${newOrder._id}`
+            success_url:`${frontend_url}/verify?success=true&orderId=${newOrder._id}`,  //when we redirect to verify route in frontend extract this from searchparams
+            cancel_url:`${frontend_url}/verify?success=false&orderId=${newOrder._id}`
              
         })
 
         return res.status(200).json({
-            success:false,
+            success:true,
             message:"Order Placed Successfully",
             newOrder,
             session_url:session.url
@@ -65,6 +65,59 @@ exports.placeOrder= async(req,res)=>{
             error:err.message
         })
     }
+}
 
+exports.verifyOrder = async (req, res) => {
+    try {
+        const { orderId, success } = req.body;
+
+        if (success === "true") {
+            await Order.findByIdAndUpdate(orderId, { payment: true });
+            return res.status(200).json({
+                success: true,
+                message: "Payment Done",
+            });
+        } 
+        else {
+            await Order.findByIdAndDelete(orderId);
+            return res.status(401).json({
+                success: false,
+                message: "Payment Failed",
+            });
+        }
+    } catch (err) {
+        console.error(err); // Log the error for debugging
+        return res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+            error: err.message,
+        });
+    }
+};
+
+//user orders for frontend
+
+exports.userOrders = async(req,res)=>{
+
+    try{
+
+        const userId = req.user.id;
+
+        const orders = await Order.find({userId});
+
+        return res.status(200).json({
+            success:true,
+            message:"User orders fetched sucessfully",
+            orders
+        })
+
+    }
+    catch(err){
+        return res.status(500).json({
+            sucess:false,
+            message:"Internal Server Error",
+            error:err.message
+        })
+    }
 
 }
