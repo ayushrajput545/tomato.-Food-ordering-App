@@ -34,7 +34,7 @@ const StoreContextProvider = (prop)=>{
 
         if(token){
             const response = await axios.post(`${url}/removecart`, {foodId:itemId},{headers:{token}});
-            console.log(response);
+            // console.log(response);
          
         }
     }

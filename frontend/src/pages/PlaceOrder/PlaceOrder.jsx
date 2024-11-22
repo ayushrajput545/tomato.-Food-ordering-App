@@ -3,6 +3,7 @@ import './PlaceOrder.css'
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const PlaceOrder = () => {
 
@@ -52,9 +53,10 @@ const PlaceOrder = () => {
      }
 
      const response = await axios.post(`${url}/placeorder`, orderData , {headers:{token:token}});
-     console.log(response);
+    //  console.log(response);
      const {session_url}= response.data;
      window.location.replace(session_url);
+
     }
 
     catch(err){ 
@@ -67,11 +69,11 @@ const PlaceOrder = () => {
 
     if(!token){
       navigate('/cart');
-      alert("Please Login")
+      toast.error("Please Login")
     }
     else if(getTotalCartAmount()===0){
       navigate('/cart');
-      alert("Add items to cart")
+      toast.error("Please add items to cart")
     }
   },[token])
 
