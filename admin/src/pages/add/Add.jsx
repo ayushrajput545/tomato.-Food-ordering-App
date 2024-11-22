@@ -36,10 +36,10 @@ const Add = ({url}) => {
         try{
             
             const response = await axios.post(`${url}/addfood`, formData);
-            console.log(response);
+            // console.log(response);
             setData({name:"",description:"" , price:"", category:"Salad"});
             setImage(false);
-            toast.success("Product Added");
+            toast.success("Product Added") ;
 
         }
         catch(err){
