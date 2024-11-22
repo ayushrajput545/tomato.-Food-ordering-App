@@ -3,7 +3,8 @@ const Order = require('../models/orderModel');
 require('dotenv').config();
 const Stripe = require('stripe');
 const orderModel = require('../models/orderModel');
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+ 
 
 exports.placeOrder= async(req,res)=>{
     
@@ -24,7 +25,7 @@ exports.placeOrder= async(req,res)=>{
                 product_data: {
                     name: item.name,
                 },
-                unit_amount: item.price * 100, // Multiplies the price by 100 for Stripe 
+                unit_amount: item.price * 100, 
             },
             quantity: item.quantity, 
         }));
@@ -39,6 +40,7 @@ exports.placeOrder= async(req,res)=>{
             },
             quantity:1
         })
+ 
 
         const session = await stripe.checkout.sessions.create({
             line_items:line_items,
@@ -48,18 +50,21 @@ exports.placeOrder= async(req,res)=>{
              
         })
 
+        
+
         return res.status(200).json({
             success:true,
             message:"Order Placed Successfully",
             newOrder,
             session_url:session.url
+                  
         })
         
 
     }
     catch(err){
         console.log(err);
-        return res.status(200).json({
+        return res.status(500).json({
             success:false,
             message:"Something went wrong while creating order",
             error:err.message
@@ -85,6 +90,7 @@ exports.verifyOrder = async (req, res) => {
                 message: "Payment Failed",
             });
         }
+
     } catch (err) {
         console.error(err); // Log the error for debugging
         return res.status(500).json({
@@ -95,6 +101,7 @@ exports.verifyOrder = async (req, res) => {
     }
 };
 
+
 //user orders for frontend
 
 exports.userOrders = async(req,res)=>{
@@ -103,7 +110,7 @@ exports.userOrders = async(req,res)=>{
 
         const userId = req.user.id;
 
-        const orders = await Order.find({userId});
+        const orders = await Order.find({userId}); // fetched orders of that loggedin user
 
         return res.status(200).json({
             success:true,
@@ -120,4 +127,51 @@ exports.userOrders = async(req,res)=>{
         })
     }
 
+}
+
+//listing order of all the users in admin panel
+exports.listOrders = async(req,res)=>{
+
+    try{
+
+        const orders = await Order.find({})  // fteched orders of all the user
+
+        return res.status(200).json({
+            success:true,
+            message:"Orders fetched successfully",
+            orders
+        })
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).json({
+            success:false,
+            message:"Internal Server Error"
+        })
+    }
+
+}
+
+//update stattus from admin pannel
+
+exports.updateStatus = async(req,res)=>{
+
+    try{
+        const {orderId , status} = req.body;
+        await Order.findByIdAndUpdate(orderId , {status:status});
+        return res.status(200).json({
+            sucess:true,
+            message:"Status Updated"
+        })
+
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).json({
+            success:false,
+            message:"Internal Server Error",
+            error:err.message
+        })
+    
+    }
 }
