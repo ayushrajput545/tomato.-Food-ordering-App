@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 exports.placeOrder= async(req,res)=>{
     
-    const frontend_url = "http://localhost:3001"
+    const frontend_url = "https://app.netlify.com/sites/rococo-croissant-8cfe60"
 
     try{
 
