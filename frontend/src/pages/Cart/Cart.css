@@ -110,4 +110,13 @@
     .cart-promocode{
         justify-content: start;
     }
+
+    .cart-items-title{
+        grid-template-columns: 1fr 1fr 1fr 1.5fr 1fr 1fr;
+
+    }
+
+    .cart-items-item img{
+        width: 40px;
+    }
 }
