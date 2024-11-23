@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 exports.placeOrder= async(req,res)=>{
     
-    const frontend_url = "https://tomato-food4u.netlify.app/"
+    const frontend_url = "https://tomato-food4u.netlify.app"
 
     try{
 
