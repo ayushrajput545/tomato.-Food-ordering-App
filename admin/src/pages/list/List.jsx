@@ -57,7 +57,7 @@ const List = ({url}) => {
         {list.map((item,index)=>{
           return(
             <div key={index} className='list-table-format'>
-              <img src={`http://localhost:3000/images/${item.image}`} alt="" width='50px' />
+              <img src={`https://tomato-food-ordering-app-ecsr.onrender.com/images/${item.image}`} alt="" width='50px' />
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>${item.price}</p>
