@@ -34,7 +34,7 @@ const Cart = () => {
 
                 <div className="cart-items-title cart-items-item">
 
-                <img src={`http://localhost:3000/images/${item.image}`} alt="" />
+                <img src={`https://tomato-food-ordering-app-ecsr.onrender.com/images/${item.image}`} alt="" />
                 <p>{item.name}</p>
                 <p>${item.price}</p>
                 <p>{cartItems[item._id]} </p>

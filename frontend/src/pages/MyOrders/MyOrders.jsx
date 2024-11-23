@@ -32,9 +32,17 @@ const MyOrders = () => {
     },[token])
 
   return (
+
+
     <div className='my-orders'>
 
         <h2>My Orders</h2>
+        
+       {
+        data.length==0 &&
+        <div className='active'> No orders yet</div>
+       }
+        
 
         <div className="container">
             {

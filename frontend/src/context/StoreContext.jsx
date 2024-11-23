@@ -8,7 +8,7 @@ const StoreContextProvider = (prop)=>{
 
     const [cartItems, setCartItems]= useState({});
     const [token , setToken] = useState("");
-    const url = "http://localhost:3000/api/v1"
+    const url = "https://tomato-food-ordering-app-ecsr.onrender.com/api/v1"
     const[food_list , setFoodList] = useState([]) // fetch food items from data base 
 
 

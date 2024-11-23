@@ -3,6 +3,7 @@ import './LoginPopup.css'
 import { assets } from '../../assets/assets';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const LoginPopup = ({setShowLogin}) => {
 
@@ -51,7 +52,8 @@ const LoginPopup = ({setShowLogin}) => {
 
         }
         catch(err){
-            console.log(err.response.data.message);
+            
+            toast.error(err.response.data.message);
 
         }
 
