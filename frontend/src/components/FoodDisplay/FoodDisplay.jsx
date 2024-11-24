@@ -5,12 +5,15 @@ import Fooditems from '../Fooditems/Fooditems';
 
 const FoodDisplay = ({category}) => {
 
-    const{food_list}= useContext(StoreContext) //fetch from contexapi
+    const{food_list, loader}= useContext(StoreContext) //fetch from contexapi
 
   return (
     <div className='food-display' id='food-display'>
 
         <h2>Top dishes near you</h2>
+        {
+          loader && <div className='loader'></div>
+        }
         <div className='food-display-list'>
             {food_list.map((item,index)=>{
 

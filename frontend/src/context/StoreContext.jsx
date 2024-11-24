@@ -13,6 +13,7 @@ const StoreContextProvider = (prop)=>{
     const url = "https://tomato-food-ordering-app-ecsr.onrender.com/api/v1"
     const[food_list , setFoodList] = useState([]) // fetch food items from data base 
     const navigate = useNavigate();
+    const [loader , setLoader]= useState(false);
 
 
 
@@ -73,10 +74,13 @@ const StoreContextProvider = (prop)=>{
     
     const fetchFoodList = async()=>{
         try{
-
+           
+            setLoader(true);
             const response = await axios.get(`${url}/showFoodList`)
-            // console.log(response);
+            console.log(response);
+            setLoader(false);
             setFoodList(response.data.foodDetails);
+            
 
         }
         catch(err){
@@ -113,7 +117,8 @@ const StoreContextProvider = (prop)=>{
         getTotalCartAmount,
         url,
         token,
-        setToken
+        setToken,
+        loader
     }
 
     return(
